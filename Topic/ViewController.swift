@@ -34,7 +34,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         label.delegate = self
-//        label.lineSpacing = 5
         label.numberOfLines = 0
         label.layer.borderWidth = 0.5
         label.zy_text = text
@@ -88,8 +87,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ZYLabelDelegate {
-    func zylabel(_ label: ZYLabel, didSelectText text: String, with item: TextLink) {
-        print(text, item)
+    func zylabel(_ label: ZYLabel, didSelectAtUserText text: String, with item: TextLink) {
+        print("@", text, item)
+    }
+
+    func zylabel(_ label: ZYLabel, didSelectTopicText text: String, with item: TextLink) {
+        print("#", text, item)
     }
 }
 

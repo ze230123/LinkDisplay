@@ -9,7 +9,8 @@
 import UIKit
 
 protocol ZYLabelDelegate: class {
-    func zylabel(_ label: ZYLabel, didSelectText text: String, with item: TextLink)
+    func zylabel(_ label: ZYLabel, didSelectAtUserText text: String, with item: TextLink)
+    func zylabel(_ label: ZYLabel, didSelectTopicText text: String, with item: TextLink)
 }
 
 class ZYLabel: UILabel {
@@ -22,8 +23,6 @@ class ZYLabel: UILabel {
     var display = Display()
 
     var dict: [String: TextLink] = [:]
-
-//    var lineSpacing: CGFloat = 0
 
     weak var delegate: ZYLabelDelegate?
 
@@ -43,7 +42,13 @@ class ZYLabel: UILabel {
         dict.forEach { (key, value) in
             let range = text.range(of: key)
             if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
-                delegate?.zylabel(self, didSelectText: key, with: value)
+                switch value.linkType {
+                case .atUser:
+                    delegate?.zylabel(self, didSelectAtUserText: key, with: value)
+                case .topic:
+                    delegate?.zylabel(self, didSelectTopicText: key, with: value)
+                default: break
+                }
                 return
             }
         }

@@ -9,6 +9,23 @@
 import UIKit
 import ObjectMapper
 
+struct LinkType: Hashable, Equatable, RawRepresentable {
+    var rawValue: String
+
+    init(_ rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+}
+
+extension LinkType {
+    static let atUser = LinkType("@")
+    static let topic = LinkType("#")
+}
+
 struct TextLink: Mappable {
     var type: String = ""
     var name: String = ""
@@ -23,6 +40,10 @@ struct TextLink: Mappable {
         default:
             return ""
         }
+    }
+
+    var linkType: LinkType {
+        return LinkType(type)
     }
 
     init() {}
