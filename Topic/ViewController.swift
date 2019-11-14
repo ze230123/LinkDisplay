@@ -13,12 +13,13 @@ class ViewController: UIViewController {
     let textString = "{\"type\":\"#\",\"name\":\"话题\",\"id\":\"12345\"} 转发z抽奖 {\"type\":\"@\",\"name\":\"优志愿\",\"id\":\"54321\"}"
 
     var text: String {
-        let item1 = Item(type: "#", name: "话题", id: "12345").json
-        let item2 = Item(type: "@", name: "优志愿", id: "1").json
-        let item3 = Item(type: "@", name: "用户1", id: "2").json
-        let item4 = Item(type: "@", name: "用户2", id: "3").json
-        let item5 = Item(type: "@", name: "用户3", id: "4").json
-        let item6 = Item(type: "@", name: "用户4", id: "5").json
+        let item1 = TextLink(type: "#", name: "话题", id: "12345").json
+        let item2 = TextLink(type: "@", name: "优志愿", id: "1").json
+        let item3 = TextLink(type: "@", name: "用户1", id: "2").json
+        let item4 = TextLink(type: "@", name: "用户2", id: "3").json
+        let item5 = TextLink(type: "@", name: "用户3", id: "4").json
+        let item6 = TextLink(type: "@", name: "用户4", id: "5").json
+
         return "\(item2) 发half\(item3) 打开了\(item4)甲方诶返回r可\(item5) \(item1) 转发z抽奖 \(item6) 抽奖[标准微笑]抽奖[调皮吐舌微笑]抽奖"
     }
 
@@ -32,10 +33,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        label.lineSpacing = 5
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = UIColor.gray
-        label.numberOfLines = 2
+        label.delegate = self
+//        label.lineSpacing = 5
+        label.numberOfLines = 0
         label.layer.borderWidth = 0.5
         label.zy_text = text
         view.addSubview(label)
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     @IBAction func addAction(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            inputBar.addUser(Item(type: "@", name: "优志愿", id: "1"))
+            inputBar.addUser(TextLink(type: "@", name: "优志愿", id: "1"))
         default:
             break
         }
@@ -84,6 +84,12 @@ class ViewController: UIViewController {
 
     @IBAction func startAction() {
         countLabel.count(from: 0, to: 1000, with: 5)
+    }
+}
+
+extension ViewController: ZYLabelDelegate {
+    func zylabel(_ label: ZYLabel, didSelectText text: String, with item: TextLink) {
+        print(text, item)
     }
 }
 
@@ -95,7 +101,7 @@ extension ViewController: ZYInputViewDelegate {
 
 extension ViewController: TTTAttributedLabelDelegate {
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithTransitInformation components: [AnyHashable : Any]!) {
-        if let json = components as? [String: Any], let item = Item(JSON: json) {
+        if let json = components as? [String: Any], let item = TextLink(JSON: json) {
             print(item)
         }
     }

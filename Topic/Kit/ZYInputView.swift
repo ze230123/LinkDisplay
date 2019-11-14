@@ -23,7 +23,7 @@ class ZYInputView: UIView, NibLoadable {
 
     weak var delegate: ZYInputViewDelegate?
 
-    var items: [Item] = []
+    var items: [TextLink] = []
 
     var linkAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.foregroundColor: UIColor.blue,
@@ -83,7 +83,7 @@ class ZYInputView: UIView, NibLoadable {
 }
 
 extension ZYInputView {
-    func addUser(_ item: Item) {
+    func addUser(_ item: TextLink) {
         let selectedRange = textView.selectedRange
         let att = NSMutableAttributedString(string: item.key)
         // 将这段文字打上标记,方便遍历

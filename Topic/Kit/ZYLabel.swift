@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ZYLabelDelegate: class {
+    func zylabel(_ label: ZYLabel, didSelectText text: String, with item: TextLink)
+}
+
 class ZYLabel: UILabel {
     var zy_text: String = "" {
         didSet {
@@ -17,14 +21,15 @@ class ZYLabel: UILabel {
 
     var display = Display()
 
-    var dict: [String: Item] = [:]
+    var dict: [String: TextLink] = [:]
 
-    var lineSpacing: CGFloat = 0
+//    var lineSpacing: CGFloat = 0
+
+    weak var delegate: ZYLabelDelegate?
 
     // MARK:- 构造函数
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         perpareTextSystem()
     }
 
@@ -38,7 +43,7 @@ class ZYLabel: UILabel {
         dict.forEach { (key, value) in
             let range = text.range(of: key)
             if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
-                print(key, value)
+                delegate?.zylabel(self, didSelectText: key, with: value)
                 return
             }
         }
@@ -62,11 +67,6 @@ private extension ZYLabel {
 
         let textRange = NSRange(location: 0, length: attString.length)
         attString.addAttribute(NSAttributedString.Key.font, value: font!, range: textRange)
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.lineSpacing = lineSpacing
-        paragraph.lineBreakMode = lineBreakMode
-
-        attString.addAttribute(.paragraphStyle, value: paragraph, range: textRange)
 
         dict.forEach { (key, value) in
             let range = attString.string.range(of: key)
@@ -109,8 +109,6 @@ extension UITapGestureRecognizer {
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y:
             locationOfTouchInLabel.y - textContainerOffset.y)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
-
 }

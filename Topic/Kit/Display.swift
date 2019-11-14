@@ -35,12 +35,12 @@ class Display {
         }
     }
 
-    func displayValue(_ value: String) -> (String, [String: Item]) {
+    func displayValue(_ value: String) -> (String, [String: TextLink]) {
         let ranges = urlRanges(text: value) ?? []
-        var dict: [String: Item] = [:]
+        var dict: [String: TextLink] = [:]
 
         ranges.forEach { (item) in
-            if let item = Item(JSONString: item.json) {
+            if let item = TextLink(JSONString: item.json) {
                 dict[item.key] = item
             }
         }

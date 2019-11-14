@@ -6,9 +6,10 @@
 //  Copyright © 2019 youzy. All rights reserved.
 //
 
+import UIKit
 import ObjectMapper
 
-struct Item: Mappable {
+struct TextLink: Mappable {
     var type: String = ""
     var name: String = ""
     var id: String = ""

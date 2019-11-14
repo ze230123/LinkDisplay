@@ -33,7 +33,7 @@
 		76BE87D6236FD38D002CC646 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76BE87D4236FD38D002CC646 /* LaunchScreen.storyboard */; };
 		76BE87E1236FD38E002CC646 /* TopicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE87E0236FD38E002CC646 /* TopicTests.swift */; };
 		76BE87EC236FD38E002CC646 /* TopicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE87EB236FD38E002CC646 /* TopicUITests.swift */; };
-		76BE87FD236FD4CB002CC646 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE87FC236FD4CB002CC646 /* Item.swift */; };
+		76BE87FD236FD4CB002CC646 /* TextLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE87FC236FD4CB002CC646 /* TextLink.swift */; };
 		76BE87FF236FD895002CC646 /* ZYLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE87FE236FD895002CC646 /* ZYLabel.swift */; };
 		76BE8803236FF364002CC646 /* SoolyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE8802236FF364002CC646 /* SoolyLabel.swift */; };
 		76BE880523716405002CC646 /* CountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE880423716405002CC646 /* CountingLabel.swift */; };
@@ -92,7 +92,7 @@
 		76BE87E7236FD38E002CC646 /* TopicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TopicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76BE87EB236FD38E002CC646 /* TopicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicUITests.swift; sourceTree = "<group>"; };
 		76BE87ED236FD38E002CC646 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76BE87FC236FD4CB002CC646 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		76BE87FC236FD4CB002CC646 /* TextLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLink.swift; sourceTree = "<group>"; };
 		76BE87FE236FD895002CC646 /* ZYLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZYLabel.swift; sourceTree = "<group>"; };
 		76BE8802236FF364002CC646 /* SoolyLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoolyLabel.swift; sourceTree = "<group>"; };
 		76BE880423716405002CC646 /* CountingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingLabel.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				76BE8802236FF364002CC646 /* SoolyLabel.swift */,
-				76BE87FC236FD4CB002CC646 /* Item.swift */,
+				76BE87FC236FD4CB002CC646 /* TextLink.swift */,
 				76BE87FE236FD895002CC646 /* ZYLabel.swift */,
 				7693B39D2379665D00503BFF /* Display.swift */,
 				7693B3A3237A54FD00503BFF /* ZYInputView.swift */,
@@ -514,7 +514,7 @@
 			files = (
 				7693B3992375405500503BFF /* Emoji.swift in Sources */,
 				76BE87FF236FD895002CC646 /* ZYLabel.swift in Sources */,
-				76BE87FD236FD4CB002CC646 /* Item.swift in Sources */,
+				76BE87FD236FD4CB002CC646 /* TextLink.swift in Sources */,
 				76BE87CE236FD38C002CC646 /* ViewController.swift in Sources */,
 				7693B39E2379665D00503BFF /* Display.swift in Sources */,
 				7693B397237538BF00503BFF /* EmojiManager.swift in Sources */,
