@@ -1,0 +1,24 @@
+PODS:
+  - ObjectMapper (3.5.1)
+  - SnapKit (5.0.1)
+  - TTTAttributedLabel (2.0.0)
+
+DEPENDENCIES:
+  - ObjectMapper
+  - SnapKit
+  - TTTAttributedLabel
+
+SPEC REPOS:
+  trunk:
+    - ObjectMapper
+    - SnapKit
+    - TTTAttributedLabel
+
+SPEC CHECKSUMS:
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+
+PODFILE CHECKSUM: ca8eeb80741463903664a1f594d5b56a46e6e3a8
+
+COCOAPODS: 1.8.3

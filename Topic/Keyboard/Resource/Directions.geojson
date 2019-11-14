@@ -1,0 +1,246 @@
+[
+    {
+        "name": "[标准微笑]",
+        "image": "smiley_0"
+    },
+    {
+        "name": "[香肠微笑]",
+        "image": "smiley_1"
+    },
+    {
+        "name": "[乐呵呵笑]",
+        "image": "smiley_2"
+    },
+    {
+        "name": "[眨眼微笑]",
+        "image": "smiley_3"
+    },
+    {
+        "name": "[可爱微笑]",
+        "image": "smiley_4"
+    },
+    {
+        "name": "[憨厚微笑]",
+        "image": "smiley_5"
+    },
+    {
+        "name": "[调皮吐舌微笑]",
+        "image": "smiley_6"
+    },
+    {
+        "name": "[露齿大笑]",
+        "image": "smiley_7"
+    },
+    {
+        "name": "[标准嫌弃]",
+        "image": "smiley_8"
+    },
+    {
+        "name": "[喜极而涕]",
+        "image": "smiley_9"
+    },
+    {
+        "name": "[挑逗微笑]",
+        "image": "smiley_10"
+    },
+    {
+        "name": "[酷酷一笑]",
+        "image": "smiley_11"
+    },
+    {
+        "name": "[侧脸尴尬]",
+        "image": "smiley_12"
+    },
+    {
+        "name": "[标准愤怒]",
+        "image": "smiley_13"
+    },
+    {
+        "name": "[花痴]",
+        "image": "smiley_14"
+    },
+    {
+        "name": "[标准害羞]",
+        "image": "smiley_15"
+    },
+    {
+        "name": "[闷骚亲亲]",
+        "image": "smiley_16"
+    },
+    {
+        "name": "[可爱亲亲]",
+        "image": "smiley_17"
+    },
+    {
+        "name": "[沮丧]",
+        "image": "smiley_18"
+    },
+    {
+        "name": "[闭眼沮丧]",
+        "image": "smiley_19"
+    },
+    {
+        "name": "[无奈出汗]",
+        "image": "smiley_20"
+    },
+    {
+        "name": "[超级委屈]",
+        "image": "smiley_21"
+    },
+    {
+        "name": "[酣睡]",
+        "image": "smiley_22"
+    },
+    {
+        "name": "[睡着]",
+        "image": "smiley_23"
+    },
+    {
+        "name": "[惊讶对人]",
+        "image": "smiley_24"
+    },
+    {
+        "name": "[惊讶对事]",
+        "image": "smiley_25"
+    },
+    {
+        "name": "[惊讶传话]",
+        "image": "smiley_26"
+    },
+    {
+        "name": "[晕倒]",
+        "image": "smiley_27"
+    },
+    {
+        "name": "[嚎啕大哭]",
+        "image": "smiley_28"
+    },
+    {
+        "name": "[标准大哭]",
+        "image": "smiley_29"
+    },
+    {
+        "name": "[闭嘴]",
+        "image": "smiley_30"
+    },
+    {
+        "name": "[爱心]",
+        "image": "smiley_31"
+    },
+    {
+        "name": "[反对]",
+        "image": "smiley_32"
+    },
+    {
+        "name": "[赞同]",
+        "image": "smiley_33"
+    },
+    {
+        "name": "[一刀]",
+        "image": "smiley_34"
+    },
+    {
+        "name": "[炸弹]",
+        "image": "smiley_35"
+    },
+    {
+        "name": "[图钉]",
+        "image": "smiley_36"
+    },
+    {
+        "name": "[小汽车]",
+        "image": "smiley_37"
+    },
+    {
+        "name": "[学校]",
+        "image": "smiley_38"
+    },
+    {
+        "name": "[医院]",
+        "image": "smiley_39"
+    },
+    {
+        "name": "[家]",
+        "image": "smiley_40"
+    },
+    {
+        "name": "[城市]",
+        "image": "smiley_41"
+    },
+    {
+        "name": "[雪糕]",
+        "image": "smiley_42"
+    },
+    {
+        "name": "[蛋糕]",
+        "image": "smiley_43"
+    },
+    {
+        "name": "[西瓜]",
+        "image": "smiley_44"
+    },
+    {
+        "name": "[太阳]",
+        "image": "smiley_45"
+    },
+    {
+        "name": "[多云]",
+        "image": "smiley_46"
+    },
+    {
+        "name": "[阴天]",
+        "image": "smiley_47"
+    },
+    {
+        "name": "[雷阵雨]",
+        "image": "smiley_48"
+    },
+    {
+        "name": "[下雨]",
+        "image": "smiley_49"
+    },
+    {
+        "name": "[雪人]",
+        "image": "smiley_50"
+    },
+    {
+        "name": "[圣诞树]",
+        "image": "smiley_51"
+    },
+    {
+        "name": "[姜饼人]",
+        "image": "smiley_52"
+    },
+    {
+        "name": "[礼物]",
+        "image": "smiley_53"
+    },
+    {
+        "name": "[金元宝]",
+        "image": "smiley_54"
+    },
+    {
+        "name": "[烟花绽放]",
+        "image": "smiley_55"
+    },
+    {
+        "name": "[鞭炮]",
+        "image": "smiley_56"
+    },
+    {
+        "name": "[红包]",
+        "image": "smiley_57"
+    },
+    {
+        "name": "[灯笼]",
+        "image": "smiley_58"
+    },
+    {
+        "name": "[鞭炮庆祝]",
+        "image": "smiley_59"
+    },
+    {
+        "name": "[中国结]",
+        "image": "smiley_60"
+    }
+]
