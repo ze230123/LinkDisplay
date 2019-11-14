@@ -35,9 +35,9 @@ class ViewController: UIViewController {
         label.lineSpacing = 5
         label.font = UIFont.systemFont(ofSize: 17)
         label.textColor = UIColor.gray
-        label.text = text
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.layer.borderWidth = 0.5
+        label.zy_text = text
         view.addSubview(label)
 
         attlabel.delegate = self
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
 
 extension ViewController: ZYInputViewDelegate {
     func inputView(_ inputView: ZYInputView, didSelectSendOf text: String) {
-        label.text = text
+        label.zy_text = text
     }
 }
 
