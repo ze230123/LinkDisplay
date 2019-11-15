@@ -14,15 +14,19 @@ protocol ZYLabelDelegate: class {
 }
 
 class ZYLabel: UILabel {
+    var linkColor: UIColor = #colorLiteral(red: 0.3137254902, green: 0.4901960784, blue: 0.6862745098, alpha: 1)
+    /// 赋值使用此属性，text/attributedText 不要使用
     var zy_text: String = "" {
         didSet {
             prepareText()
         }
     }
 
+    /// 字符串转换工具
     var display = Display()
-
+    /// @、话题 存储字典
     var dict: [String: TextLink] = [:]
+    /// @、# range 集合
     var ranges = Set<NSRange>()
 
     weak var delegate: ZYLabelDelegate?
@@ -40,9 +44,9 @@ class ZYLabel: UILabel {
 
     @objc func tapAction(gesture: UITapGestureRecognizer) {
         guard let text = self.attributedText?.string else { return }
-
         ranges.forEach { (range) in
             if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
+                // 获取点击的字符串 并找到对应模型
                 let key = text.substring(range: range)
                 let value = dict[key] ?? TextLink()
                 switch value.linkType {
@@ -68,19 +72,19 @@ private extension ZYLabel {
 
     func prepareText() {
         display.font = font
+        // 转换字符串、获取显示文字对应的字典、获取显示文字的range集合
         let (resultText, dict, ranges) = display.displayValue(zy_text)
         self.dict = dict
         self.ranges = ranges
-
+        // 转换表情
         let attString = display.replaceImage(resultText)
-
+        // 设置整体富文本属性
         let textRange = NSRange(location: 0, length: attString.length)
         attString.addAttribute(NSAttributedString.Key.font, value: font!, range: textRange)
+        attString.addAttribute(.foregroundColor, value: textColor!, range: textRange)
 
         ranges.forEach { (item) in
-//            let key = attString.string.substring(range: item)
-//            let value = dict[key]
-            attString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.blue], range: item)
+            attString.addAttributes([NSAttributedString.Key.foregroundColor: linkColor], range: item)
         }
         attributedText = attString
     }
@@ -96,7 +100,7 @@ extension String {
     }
 }
 
-extension UITapGestureRecognizer {
+private extension UITapGestureRecognizer {
 
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
         // Create instances of NSLayoutManager, NSTextContainer and NSTextStorage

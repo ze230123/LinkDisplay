@@ -29,11 +29,14 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
 
-    @IBOutlet weak var inputBar: ZYInputView!
+    @IBOutlet weak var inputBar: ZYInputBar!
     @IBOutlet weak var bottom: NSLayoutConstraint!
+
+    var manager: KeyboardManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        manager = KeyboardManager(view: view, bottom: bottom)
 
         label.delegate = self
         label.numberOfLines = 0
@@ -41,33 +44,18 @@ class ViewController: UIViewController {
         label.zy_text = text
         view.addSubview(label)
 
-        attlabel.delegate = self
-        attlabel.layer.borderWidth = 0.5
-        attlabel.lineSpacing = 5
-//        let display = Display()
-//        let (result, dict) = display.displayValue(text)
-//        attlabel.text = result
-//        attlabel.numberOfLines = 2
-//        for (key, item) in dict {
-//            let range = NSString(string: result).range(of: key)
-//            attlabel.addLink(toTransitInformation: item.toJSON(), with: range)
-//        }
-
         inputBar.delegate = self
-//        inputBar.storage.setAttributedString(NSAttributedString(string: "我发动机卡了封疆大吏"))
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        manager?.addObserver()
         inputBar.becomeFirstResponder()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        manager?.removeObserver()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -78,10 +66,9 @@ class ViewController: UIViewController {
     @IBAction func addAction(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            let image = inputBar.addUser(TextLink(type: "@", name: "优志愿", id: "1"))
-            imageView.image = image
+            inputBar.addLink(TextLink(type: "@", name: "优志愿", id: "1"))
         default:
-            break
+            inputBar.addLink(TextLink(type: "#", name: "话题", id: "12345"))
         }
     }
 
@@ -100,8 +87,20 @@ extension ViewController: ZYLabelDelegate {
     }
 }
 
-extension ViewController: ZYInputViewDelegate {
-    func inputView(_ inputView: ZYInputView, didSelectSendOf text: String) {
+extension ViewController: ZYInputBarDelegate {
+    func inputBarDidSelectAtUser(_ inputBar: ZYInputBar) {
+        let vc = PresentViewController()
+        vc.title = "关注用户"
+        presentNavVc(vc)
+    }
+
+    func inputBarDidSelectTopic(_ inputBar: ZYInputBar) {
+        let vc = PresentViewController()
+        vc.title = "话题"
+        presentNavVc(vc)
+    }
+
+    func inputBar(_ inputView: ZYInputBar, didSelectSendOf text: String) {
         label.zy_text = text
     }
 }
@@ -114,44 +113,13 @@ extension ViewController: TTTAttributedLabelDelegate {
     }
 }
 
-extension ViewController {
-    @objc func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo else {
-            return
-        }
-        guard let endFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-            let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
-                return
-        }
-
-        let keyboardFrame = endFrameValue.cgRectValue
-
-        var newFrame = inputBar.frame
-        newFrame.origin.y -= keyboardFrame.height
-
-        var inset: UIEdgeInsets = .zero
-        if #available(iOS 11.0, *) {
-            inset = view.safeAreaInsets
-        }
-        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
-            self.bottom.constant = keyboardFrame.height - inset.bottom
-            // 没有下面这句代码，不会有动画
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+extension UIViewController {
+    func present(_ vc: UIViewController, animated: Bool = true) {
+        present(vc, animated: true, completion: nil)
     }
 
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard let userInfo = notification.userInfo else {
-            return
-        }
-        guard let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-            let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
-                return
-        }
-        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
-            self.bottom.constant = 0
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+    func presentNavVc(_ vc: UIViewController, animated: Bool = true) {
+        let nav = UINavigationController(rootViewController: vc)
+        present(nav, animated: animated)
     }
 }

@@ -11,19 +11,19 @@ import UIKit
 class Display {
     var font: UIFont = UIFont.systemFont(ofSize: 15)
 
-    var pattern = "\\{\"type\":\"(@|#)\",\"name\":\"([\u{4e00}-\u{9fa5}\\w])+\",\"id\":\"([\u{4e00}-\u{9fa5}\\w])+\"\\}"
+//    var pattern = "\\{\"type\":\"(@|#)\",\"name\":\"([\u{4e00}-\u{9fa5}\\w])+\",\"id\":\"([\u{4e00}-\u{9fa5}\\w])+\"\\}"
 
-    func urlRanges(text: String) -> [JsonRange]? {
+    private func jsonRanges(text: String) -> [JsonRange]? {
         let pattern = "\\{\"\\w+\":\"(@|#)\",\"\\w+\":\"([\u{4e00}-\u{9fa5}\\w])+\",\"\\w+\":\"([\u{4e00}-\u{9fa5}\\w])+\"\\}"
         return findRanges(pattern: pattern, text: text)
     }
 
-    func emojiRanges(text: String) -> [JsonRange]? {
+    private func emojiRanges(text: String) -> [JsonRange]? {
         let pattern = "\\[([\\u4e00-\\u9fa5\\w])+\\]"
         return findRanges(pattern: pattern, text: text)
     }
 
-    func findRanges(pattern: String, text: String) -> [JsonRange]? {
+    private func findRanges(pattern: String, text: String) -> [JsonRange]? {
         do {
             let regx = try NSRegularExpression(pattern: pattern, options: [])
             let matches = regx.matches(in: text, options: [], range: NSRange(location: 0, length: text.count))
@@ -36,9 +36,10 @@ class Display {
     }
 
     func displayValue(_ value: String) -> (String, [String: TextLink], Set<NSRange>) {
-        let ranges = urlRanges(text: value) ?? []
+        // 查找json Range
+        let ranges = jsonRanges(text: value) ?? []
         var dict: [String: TextLink] = [:]
-
+        // 将json转为模型、并存储
         ranges.forEach { (item) in
             if let item = TextLink(JSONString: item.json) {
                 dict[item.key] = item
@@ -46,12 +47,13 @@ class Display {
         }
 
         var result: String = value
-
+        // 替换json
         dict.forEach { (key, value) in
             let json = value.json
             result = result.replacingOccurrences(of: json, with: key)
         }
 
+        // 查找替换json的字符串range
         var set = Set<NSRange>()
         dict.forEach { (key, value) in
             let ranges = self.findRanges(pattern: key, text: result)
@@ -62,8 +64,10 @@ class Display {
         return (result, dict, set)
     }
 
+    /// 替换表情
     func replaceImage(_ value: String) -> NSMutableAttributedString {
         let attribut = NSMutableAttributedString(string: value)
+        /// 递归替换、一次替换一个、防止替换的位置不对
         func replace(attributedString: NSMutableAttributedString) {
             let ranges = emojiRanges(text: attributedString.string) ?? []
             if let range = ranges.first {
@@ -77,6 +81,7 @@ class Display {
                 replace(attributedString: attributedString)
             }
         }
+
         replace(attributedString: attribut)
         return attribut
     }

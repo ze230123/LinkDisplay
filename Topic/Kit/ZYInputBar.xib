@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZYInputView" customModule="哈哈哈" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZYInputBar" customModule="哈哈哈" customModuleProvider="target">
             <connections>
                 <outlet property="sendBtn" destination="od3-oy-XTU" id="xqJ-y1-aC8"/>
                 <outlet property="textView" destination="TBG-Lr-YhO" id="y1v-W1-5xf"/>
@@ -24,7 +24,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jT7-Xy-syd">
                             <rect key="frame" x="0.0" y="0.0" width="382" height="91"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TBG-Lr-YhO">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TBG-Lr-YhO" customClass="ZYTextView" customModule="哈哈哈" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="28" width="334" height="35"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
@@ -33,9 +33,6 @@
                                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
-                                    <connections>
-                                        <outlet property="delegate" destination="-1" id="0S5-au-VHH"/>
-                                    </connections>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="od3-oy-XTU">
                                     <rect key="frame" x="350" y="30.666666666666664" width="32" height="30"/>
