@@ -20,12 +20,14 @@ class ViewController: UIViewController {
         let item5 = TextLink(type: "@", name: "用户3", id: "4").json
         let item6 = TextLink(type: "@", name: "用户4", id: "5").json
 
-        return "\(item2) 发half\(item3) 打开了\(item4)甲方诶返回r可\(item5) \(item1) 转发z抽奖 \(item6) 抽奖[标准微笑]抽奖[调皮吐舌微笑]抽奖"
+        return "\(item2) \(item2) 发half\(item3) 打开了\(item4)甲方诶返回r可\(item5) \(item1) 转发z抽奖 \(item6) 抽奖[标准微笑]抽奖[调皮吐舌微笑]抽奖"
     }
 
     @IBOutlet weak var countLabel: CountingLabel!
     @IBOutlet weak var label: ZYLabel!
     @IBOutlet weak var attlabel: TTTAttributedLabel!
+
+    @IBOutlet weak var imageView: UIImageView!
 
     @IBOutlet weak var inputBar: ZYInputView!
     @IBOutlet weak var bottom: NSLayoutConstraint!
@@ -42,16 +44,17 @@ class ViewController: UIViewController {
         attlabel.delegate = self
         attlabel.layer.borderWidth = 0.5
         attlabel.lineSpacing = 5
-        let display = Display()
-        let (result, dict) = display.displayValue(text)
-        attlabel.text = result
-        attlabel.numberOfLines = 2
-        for (key, item) in dict {
-            let range = NSString(string: result).range(of: key)
-            attlabel.addLink(toTransitInformation: item.toJSON(), with: range)
-        }
+//        let display = Display()
+//        let (result, dict) = display.displayValue(text)
+//        attlabel.text = result
+//        attlabel.numberOfLines = 2
+//        for (key, item) in dict {
+//            let range = NSString(string: result).range(of: key)
+//            attlabel.addLink(toTransitInformation: item.toJSON(), with: range)
+//        }
 
         inputBar.delegate = self
+//        inputBar.storage.setAttributedString(NSAttributedString(string: "我发动机卡了封疆大吏"))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +78,8 @@ class ViewController: UIViewController {
     @IBAction func addAction(_ sender: UIButton) {
         switch sender.tag {
         case 0:
-            inputBar.addUser(TextLink(type: "@", name: "优志愿", id: "1"))
+            let image = inputBar.addUser(TextLink(type: "@", name: "优志愿", id: "1"))
+            imageView.image = image
         default:
             break
         }

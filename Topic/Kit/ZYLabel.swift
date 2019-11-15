@@ -23,6 +23,7 @@ class ZYLabel: UILabel {
     var display = Display()
 
     var dict: [String: TextLink] = [:]
+    var ranges = Set<NSRange>()
 
     weak var delegate: ZYLabelDelegate?
 
@@ -39,9 +40,11 @@ class ZYLabel: UILabel {
 
     @objc func tapAction(gesture: UITapGestureRecognizer) {
         guard let text = self.attributedText?.string else { return }
-        dict.forEach { (key, value) in
-            let range = text.range(of: key)
+
+        ranges.forEach { (range) in
             if gesture.didTapAttributedTextInLabel(label: self, inRange: range) {
+                let key = text.substring(range: range)
+                let value = dict[key] ?? TextLink()
                 switch value.linkType {
                 case .atUser:
                     delegate?.zylabel(self, didSelectAtUserText: key, with: value)
@@ -65,17 +68,19 @@ private extension ZYLabel {
 
     func prepareText() {
         display.font = font
-        let (resultText, dict) = display.displayValue(zy_text)
+        let (resultText, dict, ranges) = display.displayValue(zy_text)
         self.dict = dict
+        self.ranges = ranges
 
         let attString = display.replaceImage(resultText)
 
         let textRange = NSRange(location: 0, length: attString.length)
         attString.addAttribute(NSAttributedString.Key.font, value: font!, range: textRange)
 
-        dict.forEach { (key, value) in
-            let range = attString.string.range(of: key)
-            attString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.blue], range: range)
+        ranges.forEach { (item) in
+//            let key = attString.string.substring(range: item)
+//            let value = dict[key]
+            attString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.blue], range: item)
         }
         attributedText = attString
     }
@@ -84,6 +89,10 @@ private extension ZYLabel {
 extension String {
     func range(of sub: String) -> NSRange {
         return (self as NSString).range(of: sub)
+    }
+
+    func substring(range: NSRange) -> String {
+        return (self as NSString).substring(with: range)
     }
 }
 

@@ -18,6 +18,8 @@ protocol ZYInputViewDelegate: class {
 
 @IBDesignable
 class ZYInputView: UIView, NibLoadable {
+//    let storage = TKDHighlightingTextStorage()
+
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
 
@@ -27,7 +29,12 @@ class ZYInputView: UIView, NibLoadable {
 
     var linkAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.foregroundColor: UIColor.blue,
-        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
+    ]
+
+    var attributes: [NSAttributedString.Key: Any] = [
+        NSAttributedString.Key.foregroundColor: UIColor.black,
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)
     ]
 
     lazy var keyboard: EmojiKeyboard = {
@@ -45,11 +52,13 @@ class ZYInputView: UIView, NibLoadable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         initViewFromNib()
+        setup()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initViewFromNib()
+        setup()
     }
 
     @discardableResult
@@ -80,19 +89,32 @@ class ZYInputView: UIView, NibLoadable {
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: 89)
     }
+
+    func setup() {
+//        storage.addLayoutManager(textView.layoutManager)
+    }
 }
 
 extension ZYInputView {
-    func addUser(_ item: TextLink) {
+    func addUser(_ item: TextLink) -> UIImage? {
         let selectedRange = textView.selectedRange
-        let att = NSMutableAttributedString(string: item.key)
+        let font = UIFont.systemFont(ofSize: 16)
+        let imageAtt = NSAttributedString(string: item.key, attributes: linkAttributes)
+
+        let attachment = NSTextAttachment()
+        let image = imageAtt.asImage(height: font.lineHeight)
+        attachment.image = image
+
+        attachment.bounds = CGRect(x: 0, y: font.descender, width: image?.size.width ?? 0, height: image?.size.height ?? 0)
+        let att = NSMutableAttributedString(attachment: attachment)
         // 将这段文字打上标记,方便遍历
-        att.addAttributes(linkAttributes, range: NSRange(location: 0, length: att.length))
+        att.addAttribute(.emoji, value: item.json, range: NSRange(location: 0, length: att.length))
+        att.addAttribute(.font, value: font, range: NSRange(location: 0, length: att.length))
         let attributedText = NSMutableAttributedString(attributedString: textView.attributedText)
         attributedText.replaceCharacters(in: selectedRange, with: att)
         textView.attributedText = attributedText
         textView.selectedRange = NSRange(location: selectedRange.location + att.length, length: 0)
-        items.append(item)
+        return image
     }
 
     func changeKeyboardType() {
@@ -191,6 +213,84 @@ enum KeyboardType {
             return .emoji
         case .emoji:
             return .system
+        }
+    }
+}
+
+//class TKDHighlightingTextStorage: NSTextStorage {
+//    let imp = NSMutableAttributedString()
+//
+//    var links: [TextLink] = []
+//
+//    override var string: String {
+//        return imp.string
+//    }
+//
+//    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key : Any] {
+//        return imp.attributes(at: location, effectiveRange: range)
+//    }
+//
+//    override func replaceCharacters(in range: NSRange, with str: String) {
+//        imp.replaceCharacters(in: range, with: str)
+//        edited(.editedCharacters, range: range, changeInLength: str.count - range.length)
+//    }
+//
+//    override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
+//        imp.setAttributes(attrs, range: range)
+//        edited(.editedAttributes, range: range, changeInLength: 0)
+//    }
+//
+//    override func processEditing() {
+//        let paragaphRange = (string as NSString).paragraphRange(for: editedRange)
+//        removeAttribute(.foregroundColor, range: paragaphRange)
+//
+//        links.forEach { (item) in
+//            let range = string.range(of: item.key)
+//            addAttribute(.foregroundColor, value: UIColor.red, range: range)
+//        }
+//        super.processEditing()
+//    }
+//
+//    func addUser(_ item: TextLink, range: NSRange) {
+//        // 将这段文字打上标记,方便遍历
+//        replaceCharacters(in: range, with: item.key)
+//        links.append(item)
+//    }
+//}
+
+extension NSAttributedString {
+    func asImage(height: CGFloat) -> UIImage? {
+        // 过滤空""
+        if string.isEmpty { return nil }
+        let label = UILabel()
+        label.attributedText = self
+        label.sizeToFit()
+        return label.asImage()
+//        let rect = boundingRect(with: CGSize(width: .greatestFiniteMagnitude, height: height), options: .usesLineFragmentOrigin, context: nil)
+//        // 开启上下文
+//        UIGraphicsBeginImageContext(rect.size)
+//        // 拿到上下文
+//        guard let ctx = UIGraphicsGetCurrentContext() else { return nil }
+//        // 设置填充颜色
+//        ctx.setFillColor(UIColor.white.cgColor)
+//        // 填充绘制
+//        ctx.fill(rect)
+//        // 写入文字
+//        draw(with: rect, options: .usesLineFragmentOrigin, context: nil)
+////        (string as NSString).draw(in: rect, withAttributes: linkAttributes)
+//        // 得到图片
+//        let image = UIGraphicsGetImageFromCurrentImageContext()
+//        // 关闭上下文
+//        UIGraphicsEndImageContext()
+//        return image
+    }
+}
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
         }
     }
 }

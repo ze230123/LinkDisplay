@@ -35,7 +35,7 @@ class Display {
         }
     }
 
-    func displayValue(_ value: String) -> (String, [String: TextLink]) {
+    func displayValue(_ value: String) -> (String, [String: TextLink], Set<NSRange>) {
         let ranges = urlRanges(text: value) ?? []
         var dict: [String: TextLink] = [:]
 
@@ -51,7 +51,15 @@ class Display {
             let json = value.json
             result = result.replacingOccurrences(of: json, with: key)
         }
-        return (result, dict)
+
+        var set = Set<NSRange>()
+        dict.forEach { (key, value) in
+            let ranges = self.findRanges(pattern: key, text: result)
+            ranges?.forEach { (item) in
+                set.insert(item.range)
+            }
+        }
+        return (result, dict, set)
     }
 
     func replaceImage(_ value: String) -> NSMutableAttributedString {
