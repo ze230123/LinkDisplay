@@ -56,6 +56,7 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         manager?.removeObserver()
+        inputBar.resignFirstResponder()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
